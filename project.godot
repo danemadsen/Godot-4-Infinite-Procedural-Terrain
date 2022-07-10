@@ -1,0 +1,78 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+_global_script_classes=[{
+"base": "Node3D",
+"class": &"Chunk",
+"language": &"GDScript",
+"path": "res://code/terrain_chunk.gd"
+}]
+_global_script_class_icons={
+"Chunk": ""
+}
+
+[application]
+
+config/name="Godot 4 Procedural Terrain"
+run/main_scene="res://scenes/Main.tscn"
+config/features=PackedStringArray("4.0")
+boot_splash/bg_color=Color(0.188235, 0.0784314, 0.290196, 1)
+
+[autoload]
+
+soundtrack_player="*res://music/soundtrack_player.tscn"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/fullscreen=true
+window/stretch/mode="viewport"
+window/size/width=1280
+window/size/height=548
+
+[editor_plugins]
+
+enabled=PackedStringArray()
+
+[input]
+
+left={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"meta_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":65,"unicode":0,"echo":false,"script":null)
+]
+}
+right={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"meta_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":68,"unicode":0,"echo":false,"script":null)
+]
+}
+forward={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"meta_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":87,"unicode":0,"echo":false,"script":null)
+]
+}
+back={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"store_command":true,"alt_pressed":false,"shift_pressed":false,"meta_pressed":false,"command_pressed":false,"pressed":false,"keycode":0,"physical_keycode":83,"unicode":0,"echo":false,"script":null)
+]
+}
+
+[rendering]
+
+quality/driver/fallback_to_gles2=true
+threads/thread_model=2
+quality/directional_shadow/size=2048
+quality/shadow_atlas/size=2048
+quality/reflections/texture_array_reflections=false
+quality/reflections/high_quality_ggx=false
+quality/subsurface_scattering/quality=0
+quality/depth/hdr=false
+environment/default_environment="res://default_env.tres"

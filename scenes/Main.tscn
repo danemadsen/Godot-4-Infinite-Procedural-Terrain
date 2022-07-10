@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://c6g5a7e2jlavl"]
+
+[ext_resource type="Script" path="res://code/infinite_terrain.gd" id="1_bs5ch"]
+[ext_resource type="Script" path="res://code/main.gd" id="2_wvghj"]
+[ext_resource type="PackedScene" path="res://scenes/clouds.tscn" id="3_unoq7"]
+[ext_resource type="Script" path="res://code/camera_movement.gd" id="4_eue2k"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_55064"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_2nkv4"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_bs5ch")
+
+[node name="sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.987916, -0.154432, 0.0131529, -0.154774, -0.987462, 0.0310444, 0.00819379, -0.032705, -0.999431, 0, 24, 0)
+light_energy = 2.0
+shadow_enabled = true
+shadow_reverse_cull_face = true
+directional_shadow_blend_splits = true
+directional_shadow_max_distance = 1024.0
+script = ExtResource("2_wvghj")
+next_scene_bigfile = "intro"
+
+[node name="clouds" parent="." instance=ExtResource("3_unoq7")]
+transform = Transform3D(16, 0, 0, 0, 1, 0, 0, 0, 16, 0, 256, 0)
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 66.4499, 18.45)
+script = ExtResource("4_eue2k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_55064")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("CapsuleMesh_2nkv4")
+
+[node name="Neck" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.611113, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Player/Neck"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.58526)
