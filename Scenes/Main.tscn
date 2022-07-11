@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0e2glfeewm2s"]
+
+[ext_resource type="Script" path="res://Scripts/NoClipPlayer.gd" id="1_fgkor"]
+[ext_resource type="Script" path="res://Scripts/Main.gd" id="1_xfi21"]
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_xfi21")
+
+[node name="Player" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = ExtResource("1_fgkor")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 10, 0)
