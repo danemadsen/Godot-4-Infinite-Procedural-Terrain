@@ -1,0 +1,63 @@
+[gd_resource type="Shader" format=3 uid="uid://1acga6qf4x7j"]
+
+[resource]
+code = "shader_type spatial;
+
+uniform float uv_scale = 1.0;
+
+uniform float depth_start;
+uniform float depth_blend;
+
+uniform float grass_start;
+uniform float grass_blend;
+
+uniform float layer_noise_scale = 5.0;
+uniform sampler2D layering_noise;
+
+uniform sampler2D depth_tex : source_color;
+uniform sampler2D grass_tex : source_color;
+uniform sampler2D cliff_tex : source_color;
+uniform sampler2D norm_map : source_color;
+
+varying vec3 interp_world_pos;
+varying vec3 interp_norm;
+
+void vertex() {
+	interp_world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	interp_norm = NORMAL;
+}
+
+vec3 mix_cliff_albedo (vec3 albedo, vec2 uv, vec3 n) {
+	if (interp_norm.y >= 0.0 && interp_norm.y < 0.4) {
+		float blend = n.y / 0.4;
+		blend = clamp(blend, 0.0, 1.0);
+		return mix(texture(cliff_tex, uv).rgb, albedo, blend);
+	} else return albedo;
+}
+
+void fragment() {
+	vec2 uv = UV * uv_scale;
+	float y = interp_world_pos.y + (texture(layering_noise, interp_world_pos.xz / 1024.0).r - 0.5) * 2.0 * layer_noise_scale;
+	vec3 n = interp_norm;
+	
+	if (y <= depth_start) {
+		ALBEDO = vec3(0.0, 0.0, 0.0);
+	} else if (y <= depth_start + depth_blend) {
+		float blend = (y - depth_start) / depth_blend;
+		blend = clamp(blend, 0.0, 1.0);
+		ALBEDO = mix(vec3(0.0, 0.0, 0.0), texture(depth_tex, uv).rgb, blend);
+	}
+	else if (y <= grass_start) {
+		ALBEDO = texture(depth_tex, uv).rgb;
+	} else if (y <= grass_start + grass_blend) {
+		float blend = (y - grass_start) / grass_blend;
+		blend = clamp(blend, 0.0, 1.0);
+		ALBEDO = mix(texture(depth_tex, uv).rgb, mix_cliff_albedo(texture(grass_tex, uv).rgb, uv, n), blend);
+	}
+	else {
+		ALBEDO = mix_cliff_albedo(texture(grass_tex, uv).rgb, uv, n);
+	}
+	
+	NORMAL_MAP = texture(norm_map, uv).rgb;
+}
+"

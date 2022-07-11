@@ -1,0 +1,28 @@
+[gd_resource type="ShaderMaterial" load_steps=7 format=3 uid="uid://cn8a3juccrp4u"]
+
+[ext_resource type="Texture2D" uid="uid://dhek1ckyy27re" path="res://Texture/cliff_tex.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://8xlxyln3qkum" path="res://Texture/depth_tex.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://sppcbf1nxo61" path="res://Texture/grass_tex.png" id="7"]
+[ext_resource type="Shader" uid="uid://c6rd4anc14qcv" path="res://Materials/GroundShader.tres" id="11"]
+
+[sub_resource type="FastNoiseLite" id="1"]
+
+[sub_resource type="NoiseTexture" id="2"]
+width = 1024
+height = 1024
+seamless = true
+noise = SubResource("1")
+
+[resource]
+render_priority = 0
+shader = ExtResource("11")
+shader_param/cliff_tex = ExtResource("2")
+shader_param/depth_blend = 100.0
+shader_param/depth_start = -600.0
+shader_param/depth_tex = ExtResource("3")
+shader_param/grass_blend = 100.0
+shader_param/grass_start = -200.0
+shader_param/grass_tex = ExtResource("7")
+shader_param/layer_noise_scale = 100.0
+shader_param/layering_noise = SubResource("2")
+shader_param/uv_scale = 8.0
