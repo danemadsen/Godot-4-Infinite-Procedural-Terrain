@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dc31dg53koqol"]
-
-[ext_resource type="Script" path="res://code/terrain_chunk.gd" id="1_51t5c"]
-
-[node name="terrain_chunk" type="Node3D"]
-script = ExtResource("1_51t5c")

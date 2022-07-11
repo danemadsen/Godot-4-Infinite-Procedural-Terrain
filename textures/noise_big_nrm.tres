@@ -1,8 +1,0 @@
-[gd_resource type="NoiseTexture" load_steps=2 format=3 uid="uid://cbtse2hnhe8jp"]
-
-[sub_resource type="FastNoiseLite" id="1"]
-seed = 7
-
-[resource]
-seamless = true
-noise = SubResource("1")
