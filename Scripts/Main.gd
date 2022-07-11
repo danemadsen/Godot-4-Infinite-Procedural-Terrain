@@ -76,9 +76,9 @@ func _input(event):
 		get_tree().quit()
 
 func update_chunks():
-	var player_translation = $Player.position
-	var p_x = int(player_translation.x) / chunk_size
-	var p_z = int(player_translation.z) / chunk_size
+	var player_position = $Player.position
+	var p_x = int(player_position.x) / chunk_size
+	var p_z = int(player_position.z) / chunk_size
 	
 	for x in range(p_x - chunk_amount * 0.5, p_x + chunk_amount * 0.5):
 		for z in range(p_z - chunk_amount * 0.5, p_z + chunk_amount * 0.5):

@@ -3,6 +3,7 @@ class_name Chunk
 
 var mesh_instance : MeshInstance3D
 var noise : FastNoiseLite
+var chunk_material = preload("res://materials/GroundMaterial.tres")
 var x
 var z
 var chunk_size
@@ -24,7 +25,6 @@ func generate_chunk():
 	plane_mesh.size = Vector2(chunk_size, chunk_size)
 	plane_mesh.subdivide_depth = chunk_size * 0.5
 	plane_mesh.subdivide_width = chunk_size * 0.5
-	plane_mesh.material = preload("res://materials/grass.material")
 	
 	var surface_tool = SurfaceTool.new()
 	var data_tool = MeshDataTool.new()
@@ -46,5 +46,6 @@ func generate_chunk():
 	mesh_instance = MeshInstance3D.new()
 	mesh_instance.mesh = surface_tool.commit()
 	mesh_instance.create_trimesh_collision()
+	mesh_instance.mesh.surface_set_material(0, chunk_material)
 	mesh_instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(mesh_instance)
