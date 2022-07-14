@@ -1,9 +1,9 @@
-[gd_resource type="ShaderMaterial" load_steps=7 format=3 uid="uid://cn8a3juccrp4u"]
+[gd_resource type="ShaderMaterial" load_steps=7 format=3 uid="uid://cchxac3jxnusp"]
 
 [ext_resource type="Texture2D" uid="uid://dhek1ckyy27re" path="res://Texture/cliff_tex.png" id="2"]
 [ext_resource type="Texture2D" uid="uid://8xlxyln3qkum" path="res://Texture/depth_tex.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://sppcbf1nxo61" path="res://Texture/grass_tex.png" id="7"]
-[ext_resource type="Shader" uid="uid://c6rd4anc14qcv" path="res://Materials/GroundShader.tres" id="11"]
+[ext_resource type="Shader" uid="uid://1acga6qf4x7j" path="res://Materials/GroundShader.tres" id="11"]
 
 [sub_resource type="FastNoiseLite" id="1"]
 
