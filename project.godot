@@ -15,13 +15,19 @@ _global_script_classes=[{
 "path": "res://Scripts/ChunkScript.gd"
 }, {
 "base": "Node",
-"class": &"NoiseMaps",
+"class": &"Climate",
 "language": &"GDScript",
-"path": "res://Scripts/NoiseMaps.gd"
+"path": "res://Scripts/Climate.gd"
+}, {
+"base": "Node",
+"class": &"NoiseHelper",
+"language": &"GDScript",
+"path": "res://Scripts/NoiseHelper.gd"
 }]
 _global_script_class_icons={
 "Chunk": "",
-"NoiseMaps": ""
+"Climate": "",
+"NoiseHelper": ""
 }
 
 [application]

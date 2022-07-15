@@ -11,7 +11,7 @@ var chunk_height
 var should_remove = false
 
 func _init(seed, x, z, chunk_size, chunk_height):
-	self.noise = NoiseMaps.new(seed)
+	self.noise = NoiseHelper.new(seed)
 	self.x = x
 	self.z = z
 	self.chunk_size = chunk_size
@@ -34,7 +34,8 @@ func generate_chunk():
 	
 	for i in range(data_tool.get_vertex_count()):
 		var vertex = data_tool.get_vertex(i)
-		vertex.y = (noise.base.get_noise_3d(vertex.x + x, vertex.y, vertex.z + z) - noise.mountains.get_noise_3d(vertex.x + x, vertex.y, vertex.z + z)) * chunk_height
+		var climate = get_climate(vertex)
+		vertex.y = (noise.base.get_noise_3d(vertex.x + x, vertex.y, vertex.z + z)) * chunk_height
 		data_tool.set_vertex(i, vertex)
 	
 	array_plane.clear_surfaces()
@@ -50,8 +51,8 @@ func generate_chunk():
 	mesh_instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(mesh_instance)
 
-func get_biome(vertex):
-	if (noise.climate_map.get_noise_3d(vertex.x + x, vertex.y, vertex.z + z) >= 0.5):
-		return noise.mountains
+func get_climate(vertex):
+	if (noise.climate_cold.get_weight() != 0):
+		return noise.climate_cold
 	else:
-		return noise.base
+		return noise.climate_hot
