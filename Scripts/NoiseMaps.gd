@@ -4,6 +4,12 @@ class_name NoiseMaps
 var base
 var climate_map
 var biome_map
+var mountains
+var taiga
+var planes
+var mesa
+var desert
+
 
 func _init(seed):
 	randomize()
@@ -11,6 +17,7 @@ func _init(seed):
 	self.base.noise_type = FastNoiseLite.TYPE_SIMPLEX
 	self.base.seed = seed
 	self.base.frequency = 0.005
+	self.base.fractal_type = FastNoiseLite.FRACTAL_FBM
 	self.base.fractal_octaves = 5
 	self.base.fractal_lacunarity = 2.5
 	self.base.fractal_gain = 0.6
@@ -37,4 +44,16 @@ func _init(seed):
 	self.biome_map.domain_warp_fractal_lacunarity = 2.5
 	self.biome_map.domain_warp_fractal_gain = 0.5
 	
-
+	self.mountains = FastNoiseLite.new()
+	self.mountains.noise_type = FastNoiseLite.TYPE_PERLIN
+	self.mountains.seed = seed + 3
+	self.mountains.frequency = 0.01
+	self.mountains.fractal_type = FastNoiseLite.FRACTAL_FBM
+	self.mountains.fractal_octaves = 5
+	self.mountains.fractal_lacunarity = 2.5
+	self.mountains.fractal_gain = 0.5
+	self.mountains.fractal_weighted_strength = 0.9
+	self.mountains.domain_warp_enabled = true
+	self.mountains.domain_warp_type = FastNoiseLite.DOMAIN_WARP_SIMPLEX_REDUCED
+	self.mountains.domain_warp_amplitude = 20
+	self.mountains.domain_warp_frequency = 0.005

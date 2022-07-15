@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=7 format=3 uid="uid://cchxac3jxnusp"]
+[gd_resource type="ShaderMaterial" load_steps=7 format=3 uid="uid://cq75exge0smdv"]
 
 [ext_resource type="Texture2D" uid="uid://dhek1ckyy27re" path="res://Texture/cliff_tex.png" id="2"]
 [ext_resource type="Texture2D" uid="uid://8xlxyln3qkum" path="res://Texture/depth_tex.png" id="3"]

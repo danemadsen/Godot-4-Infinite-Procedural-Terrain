@@ -13,7 +13,6 @@ var noise
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
-	noise = NoiseMaps.new(seed)
 	thread = Thread.new()
 
 func add_chunk(x, z):
@@ -32,7 +31,7 @@ func load_chunk(arr):
 	var x = arr[1]
 	var z = arr[2]
 	
-	var chunk = Chunk.new(noise.base, x * chunk_size, z * chunk_size, chunk_size, chunk_height)
+	var chunk = Chunk.new(seed, x * chunk_size, z * chunk_size, chunk_size, chunk_height)
 	chunk.position = Vector3(x * chunk_size, 0, z * chunk_size)
 	
 	call_deferred("load_done", chunk, thread)
