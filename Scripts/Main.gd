@@ -93,7 +93,7 @@ func reset_chunks():
 func debug():
 	debug_text = "Position:" + str(player_position)
 	debug_text += "\nClimate:" + str(noise.climate_map.get_noise_3d(player_position.x, 0, player_position.z))
-	debug_text += "\nBiome:" + str(noise.biome_map.get_noise_3d(player_position.x, 0, player_position.z))
+	debug_text += "\nBiome:" + noise.get_player_climate(player_position.x, player_position.z).get_biome(noise.biome_map.get_noise_3d(player_position.x, 0, player_position.z)).biome_name
 	debug_text += "\nClimate:" + noise.get_player_climate(player_position.x, player_position.z).climate_name
 	$Player/DebugLabel.set_text(debug_text)
 

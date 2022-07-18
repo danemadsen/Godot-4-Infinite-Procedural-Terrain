@@ -15,7 +15,6 @@ func _init(text, biome1, biome2, biome3, biome4):
 	self.biome_4 = biome4
 
 func get_biome(biome_factor):
-	return biome_1
 	if(biome_factor < -0.5):
 		return biome_1
 	elif(biome_factor < 0):

@@ -66,11 +66,14 @@ func _init(n_seed):
 	noise.domain_warp_amplitude = 20
 	noise.domain_warp_frequency = 0.005
 	self.mountains = Biome.new("Mountain", noise)
+	self.taiga = Biome.new("Taiga", noise)
+	self.planes = Biome.new("Planes", noise)
+	self.mesa = Biome.new("Mesa", noise)
 	
 	self.climate_hot = Climate.new("Hot", basebiome, basebiome, basebiome, basebiome)
 	#self.climate_warm = Climate.new(0.35, base, base, base, base)
 	#self.climate_cool = Climate.new(-0.35, base, base, base, base)
-	self.climate_cold = Climate.new("Cold", mountains, mountains, mountains, mountains)
+	self.climate_cold = Climate.new("Cold", mountains, taiga, planes, mesa)
 	
 
 func get_weight(temperature, offset):
