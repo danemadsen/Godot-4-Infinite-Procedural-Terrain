@@ -1,14 +1,20 @@
 extends Node3D
+class_name Root_Node
 
 var chunks = {}
 var unready_chunks = {}
 var thread
+var player_position
+var debug_text
 
 var noise
 @export var chunk_size = 128
 @export var chunk_height = 32
 @export var chunk_amount = 16
 @export var seed = 148
+
+func _init():
+	noise = NoiseHelper.new(seed)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,8 +28,8 @@ func add_chunk(x, z):
 	
 	if not thread.is_started():
 		var callable = Callable(self, "load_chunk")
-		thread.start(callable)
 		callable.call([thread, x, z])
+		thread.start(callable)
 		unready_chunks[key] = 1
 
 func load_chunk(arr):
@@ -31,7 +37,7 @@ func load_chunk(arr):
 	var x = arr[1]
 	var z = arr[2]
 	
-	var chunk = Chunk.new(seed, x * chunk_size, z * chunk_size, chunk_size, chunk_height)
+	var chunk = Chunk.new(noise, x * chunk_size, z * chunk_size, chunk_size, chunk_height)
 	chunk.position = Vector3(x * chunk_size, 0, z * chunk_size)
 	
 	call_deferred("load_done", chunk, thread)
@@ -52,16 +58,17 @@ func get_chunk(x, z):
 	return null
 
 func _process(delta):
+	player_position = $Player.position
 	update_chunks()
 	clean_up_chunks()
 	reset_chunks()
+	debug()
 
 func _input(event):
 	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().quit()
 
 func update_chunks():
-	var player_position = $Player.position
 	var p_x = int(player_position.x) / chunk_size
 	var p_z = int(player_position.z) / chunk_size
 	
@@ -82,3 +89,11 @@ func clean_up_chunks():
 func reset_chunks():
 	for key in chunks:
 		chunks[key].should_remove = true
+
+func debug():
+	debug_text = "Position:" + str(player_position)
+	debug_text += "\nClimate:" + str(noise.climate_map.get_noise_3d(player_position.x, 0, player_position.z))
+	debug_text += "\nBiome:" + str(noise.biome_map.get_noise_3d(player_position.x, 0, player_position.z))
+	debug_text += "\nClimate:" + noise.get_player_climate(player_position.x, player_position.z).climate_name
+	$Player/DebugLabel.set_text(debug_text)
+

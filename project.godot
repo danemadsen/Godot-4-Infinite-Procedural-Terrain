@@ -9,6 +9,11 @@
 config_version=5
 
 _global_script_classes=[{
+"base": "Node",
+"class": &"Biome",
+"language": &"GDScript",
+"path": "res://Scripts/Biome.gd"
+}, {
 "base": "Node3D",
 "class": &"Chunk",
 "language": &"GDScript",
@@ -23,11 +28,18 @@ _global_script_classes=[{
 "class": &"NoiseHelper",
 "language": &"GDScript",
 "path": "res://Scripts/NoiseHelper.gd"
+}, {
+"base": "Node3D",
+"class": &"Root_Node",
+"language": &"GDScript",
+"path": "res://Scripts/Main.gd"
 }]
 _global_script_class_icons={
+"Biome": "",
 "Chunk": "",
 "Climate": "",
-"NoiseHelper": ""
+"NoiseHelper": "",
+"Root_Node": ""
 }
 
 [application]
