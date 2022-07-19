@@ -91,9 +91,13 @@ func reset_chunks():
 		chunks[key].should_remove = true
 
 func debug():
+	var current_climate = noise.get_player_climate(player_position.x, player_position.z)
 	debug_text = "Position:" + str(player_position)
-	debug_text += "\nClimate:" + str(noise.climate_map.get_noise_3d(player_position.x, 0, player_position.z))
-	debug_text += "\nBiome:" + noise.get_player_climate(player_position.x, player_position.z).get_biome(noise.biome_map.get_noise_3d(player_position.x, 0, player_position.z)).biome_name
-	debug_text += "\nClimate:" + noise.get_player_climate(player_position.x, player_position.z).climate_name
+	debug_text += "\nClimate Noise:" + str(noise.climate_map.get_noise_3d(player_position.x, 0, player_position.z))
+	debug_text += "\nClimate:" + current_climate.climate_name
+	debug_text += "\nCold Weight:" + str(noise.get_weight(noise.biome_map.get_noise_3d(player_position.x, 0, player_position.z), noise.climate_cold.offset))
+	debug_text += "\nBiome Noise:" + str(noise.biome_map.get_noise_3d(player_position.x, 0, player_position.z))
+	debug_text += "\nBiome:" + current_climate.get_biome(noise.biome_map.get_noise_3d(player_position.x, 0, player_position.z)).biome_name
+	
 	$Player/DebugLabel.set_text(debug_text)
 

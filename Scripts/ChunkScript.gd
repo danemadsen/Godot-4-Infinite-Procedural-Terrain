@@ -36,7 +36,7 @@ func generate_chunk():
 		var vertex = data_tool.get_vertex(i)
 		var climate = noise.get_climate(vertex, x, z)
 		var biome = climate.get_biome(noise.biome_map.get_noise_3d(vertex.x + x, vertex.y, vertex.z + z))
-		vertex.y = (noise.base.get_noise_3d(vertex.x + x, vertex.y, vertex.z + z) - biome.biome_noise.get_noise_3d(vertex.x + x, vertex.y, vertex.z + z)) * chunk_height
+		vertex.y = ((biome.biome_noise.get_noise_3d(vertex.x + x, vertex.y, vertex.z + z)) * noise.get_weight(noise.climate_map.get_noise_3d(vertex.x + x, vertex.y, vertex.z + z), climate.offset)) * chunk_height
 		#vertex.y = noise.biome_map.get_noise_3d(vertex.x + x, vertex.y, vertex.z + z) * chunk_height
 		data_tool.set_vertex(i, vertex)
 	
