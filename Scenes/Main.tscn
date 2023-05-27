@@ -5,6 +5,7 @@
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_xfi21")
+elevationCurve = 0.0
 
 [node name="Player" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -15,6 +16,7 @@ offset_left = 34.0
 offset_top = 42.0
 offset_right = 646.0
 offset_bottom = 403.0
+text = "Position:(0, 2, 0)"
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 10, 0)

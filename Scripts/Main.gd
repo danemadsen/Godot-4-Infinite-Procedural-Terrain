@@ -1,3 +1,4 @@
+@tool
 extends Node3D
 class_name Root_Node
 
@@ -8,18 +9,20 @@ var player_position
 var debug_text
 
 var noise
-@export var chunk_size = 128
-@export var chunk_height = 32
-@export var chunk_amount = 16
-@export var seed = 148
-
-func _init():
-	noise = NoiseHelper.new(seed)
+@export var chunk_size : int = 128
+@export var chunk_height : int = 32
+@export var chunk_amount : int = 16
+@export var seed : int = 148
+@export var elevationCurve : float = 1.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	randomize()
 	thread = Thread.new()
+	noise = FastNoiseLite.new()
+	noise.noise_type = FastNoiseLite.NoiseType.TYPE_PERLIN
+	noise.fractal_type = FastNoiseLite.FRACTAL_FBM
+	noise.fractal_octaves = 4
+	noise.seed = seed  # Use a common seed value
 
 func add_chunk(x, z):
 	var key = str(x) + "," + str(z)
@@ -32,14 +35,14 @@ func add_chunk(x, z):
 		thread.start(callable)
 		unready_chunks[key] = 1
 
+# Adjusted function to pass noise to Chunk
 func load_chunk(arr):
 	var thread = arr[0]
 	var x = arr[1]
 	var z = arr[2]
 	
-	var chunk = Chunk.new(noise, x * chunk_size, z * chunk_size, chunk_size, chunk_height)
-	chunk.position = Vector3(x * chunk_size, 0, z * chunk_size)
-	
+	var chunk = Chunk.new(noise, x * chunk_size, z * chunk_size, chunk_size, chunk_height, elevationCurve)
+	chunk.position = Vector3(x * chunk_size, 0, z * chunk_size)	
 	call_deferred("load_done", chunk, thread)
 
 func load_done(chunk, thread):
@@ -91,13 +94,6 @@ func reset_chunks():
 		chunks[key].should_remove = true
 
 func debug():
-	var current_climate = noise.get_player_climate(player_position.x, player_position.z)
 	debug_text = "Position:" + str(player_position)
-	debug_text += "\nClimate Noise:" + str(noise.climate_map.get_noise_3d(player_position.x, 0, player_position.z))
-	debug_text += "\nClimate:" + current_climate.climate_name
-	debug_text += "\nCold Weight:" + str(noise.get_weight(noise.biome_map.get_noise_3d(player_position.x, 0, player_position.z), noise.climate_cold.offset))
-	debug_text += "\nBiome Noise:" + str(noise.biome_map.get_noise_3d(player_position.x, 0, player_position.z))
-	debug_text += "\nBiome:" + current_climate.get_biome(noise.biome_map.get_noise_3d(player_position.x, 0, player_position.z)).biome_name
-	
 	$Player/DebugLabel.set_text(debug_text)
 

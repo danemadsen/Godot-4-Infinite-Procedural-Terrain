@@ -1,15 +1,12 @@
 extends Camera3D
 # Simple script for a flying first-person player
 
-
 @export var look_sens : float = 0.1
 @export var speed : float = 60.0
 var _look_buffer = Vector2()
 
-
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
 
 func _physics_process(delta):
 	var direction = (
@@ -27,14 +24,10 @@ func _physics_process(delta):
 		rotation.x = clamp(rotation.x, - PI/2, PI/2)
 		_look_buffer = Vector2.ZERO
 
-
 func _input(event):
 	if event is InputEventMouseMotion:
 		_look_buffer += event.relative
 
-
 func _process(_delta):
 	if Input.is_action_just_pressed("toggle_fullscreen"):
-		OS.window_fullscreen = not OS.window_fullscreen
-	if Input.is_action_just_pressed("pause"): 
-		get_tree().notification(MainLoop.NOTIFICATION_WM_QUIT_REQUEST)
+		Window.mode = Window.MODE_FULLSCREEN

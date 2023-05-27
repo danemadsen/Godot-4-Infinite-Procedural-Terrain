@@ -7,7 +7,7 @@
 
 [sub_resource type="FastNoiseLite" id="1"]
 
-[sub_resource type="NoiseTexture" id="2"]
+[sub_resource type="NoiseTexture2D" id="2"]
 width = 1024
 height = 1024
 seamless = true
@@ -16,13 +16,13 @@ noise = SubResource("1")
 [resource]
 render_priority = 0
 shader = ExtResource("11")
-shader_param/cliff_tex = ExtResource("2")
-shader_param/depth_blend = 100.0
-shader_param/depth_start = -600.0
-shader_param/depth_tex = ExtResource("3")
-shader_param/grass_blend = 100.0
-shader_param/grass_start = -200.0
-shader_param/grass_tex = ExtResource("7")
-shader_param/layer_noise_scale = 100.0
-shader_param/layering_noise = SubResource("2")
-shader_param/uv_scale = 8.0
+shader_parameter/uv_scale = 8.0
+shader_parameter/depth_start = -600.0
+shader_parameter/depth_blend = 100.0
+shader_parameter/grass_start = -200.0
+shader_parameter/grass_blend = 100.0
+shader_parameter/layer_noise_scale = 100.0
+shader_parameter/layering_noise = SubResource("2")
+shader_parameter/depth_tex = ExtResource("3")
+shader_parameter/grass_tex = ExtResource("7")
+shader_parameter/cliff_tex = ExtResource("2")

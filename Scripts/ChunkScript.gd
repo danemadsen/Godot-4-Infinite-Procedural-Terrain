@@ -1,21 +1,24 @@
+@tool
 extends Node3D
 class_name Chunk
 
 var mesh_instance : MeshInstance3D
-var noise
-var chunk_material = preload("res://materials/GroundMaterial.tres")
+var noise : FastNoiseLite
+var chunk_material = preload("res://Materials/GroundMaterial.tres")
 var x
 var z
 var chunk_size
 var chunk_height
 var should_remove = false
+var curve_value
 
-func _init(noise_helper, x, z, chunk_size, chunk_height):
-	self.noise = noise_helper
+func _init(_noise, x, z, chunk_size, chunk_height, curve_value):
+	self.noise = _noise  # Accept noise instance from root node
 	self.x = x
 	self.z = z
 	self.chunk_size = chunk_size
 	self.chunk_height = chunk_height
+	self.curve_value = curve_value
 
 func _ready():
 	generate_chunk()
@@ -34,10 +37,8 @@ func generate_chunk():
 	
 	for i in range(data_tool.get_vertex_count()):
 		var vertex = data_tool.get_vertex(i)
-		var climate = noise.get_climate(vertex, x, z)
-		var biome = climate.get_biome(noise.biome_map.get_noise_3d(vertex.x + x, vertex.y, vertex.z + z))
-		vertex.y = ((biome.biome_noise.get_noise_3d(vertex.x + x, vertex.y, vertex.z + z)) * noise.get_weight(noise.climate_map.get_noise_3d(vertex.x + x, vertex.y, vertex.z + z), climate.offset)) * chunk_height
-		#vertex.y = noise.biome_map.get_noise_3d(vertex.x + x, vertex.y, vertex.z + z) * chunk_height
+		vertex.y += noise.get_noise_2d(vertex.x + self.x, vertex.z + self.z) * chunk_height
+		vertex.y *= curve_value * pow(vertex.y, 2) - curve_value * vertex.y + 1.0
 		data_tool.set_vertex(i, vertex)
 	
 	array_plane.clear_surfaces()
@@ -52,5 +53,3 @@ func generate_chunk():
 	mesh_instance.mesh.surface_set_material(0, chunk_material)
 	mesh_instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(mesh_instance)
-
-
